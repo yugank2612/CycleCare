@@ -35,10 +35,13 @@ export function parseLocalDate(value) {
 }
 
 /**
- * Format a valid Date as YYYY-MM-DD using local date fields.
+ * Format a valid Date as YYYY-MM-DD.
  */
 export function dateKey(date) {
-  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+  if (
+    !(date instanceof Date) ||
+    Number.isNaN(date.getTime())
+  ) {
     throw new TypeError("A valid Date object is required.");
   }
 
@@ -50,10 +53,13 @@ export function dateKey(date) {
 }
 
 /**
- * Return a new Date shifted by a whole number of calendar days.
+ * Return a new Date shifted by whole calendar days.
  */
 export function addDays(date, days) {
-  if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+  if (
+    !(date instanceof Date) ||
+    Number.isNaN(date.getTime())
+  ) {
     throw new TypeError("A valid Date object is required.");
   }
 
@@ -70,9 +76,10 @@ export function addDays(date, days) {
 /**
  * Calculate an approximate cycle summary.
  *
- * referenceDate is optional and useful for deterministic tests.
- * Estimates are informational and must not be used for diagnosis
- * or contraception.
+ * referenceDate is optional and allows deterministic testing.
+ *
+ * These calculations are informational estimates only.
+ * They must not be used for medical diagnosis or contraception.
  */
 export function cycleSummary(
   lastPeriod,
@@ -85,7 +92,9 @@ export function cycleSummary(
   const cycle = Number(cycleLength);
   const period = Number(periodLength);
 
-  if (!start) return null;
+  if (!start) {
+    return null;
+  }
 
   if (
     !Number.isInteger(cycle) ||
@@ -113,8 +122,8 @@ export function cycleSummary(
   const today = new Date(referenceDate);
   today.setHours(0, 0, 0, 0);
 
-  // Convert calendar dates to UTC day numbers.
-  // This avoids daylight-saving time affecting day calculations.
+  // Convert calendar dates into UTC day numbers.
+  // This prevents daylight-saving changes from affecting day counts.
   const toDayNumber = (date) =>
     Date.UTC(
       date.getFullYear(),
@@ -122,23 +131,31 @@ export function cycleSummary(
       date.getDate()
     ) / 86400000;
 
-  const elapsedDays = toDayNumber(today) - toDayNumber(start);
+  const elapsedDays =
+    toDayNumber(today) - toDayNumber(start);
 
-  // A future last-period date is invalid.
-  if (elapsedDays < 0) return null;
+  // Reject a future last-period date.
+  if (elapsedDays < 0) {
+    return null;
+  }
 
-  const cycleDay = (elapsedDays % cycle) + 1;
   const daysSinceCycleStart = elapsedDays % cycle;
 
-  // Find the next estimated cycle start, including older cycles.
-  const daysUntilNext = cycle - daysSinceCycleStart;
+  const cycleDay = daysSinceCycleStart + 1;
 
-  const completedCycles = Math.floor(elapsedDays / cycle);
+  // At the original start date, the next estimated cycle
+  // starts after one full cycle.
+  //
+  // At a later exact cycle boundary, the next estimate
+  // is due today (0 days remaining).
+  const daysUntilNext =
+    elapsedDays === 0
+      ? cycle
+      : daysSinceCycleStart === 0
+        ? 0
+        : cycle - daysSinceCycleStart;
 
-  const nextDate = addDays(
-    start,
-    (completedCycles + 1) * cycle
-  );
+  const nextDate = addDays(today, daysUntilNext);
 
   return {
     day: cycleDay,
@@ -150,8 +167,10 @@ export function cycleSummary(
 
 /**
  * Generate calendar cells for a month.
+ *
  * Sunday is the first day of the week.
- * Month is zero-based (January = 0).
+ * Month is zero-based:
+ * January = 0, February = 1, ..., December = 11.
  */
 export function monthCells(year, month) {
   if (
