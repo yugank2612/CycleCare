@@ -1135,7 +1135,7 @@ function Home({ summary, lastPeriod, entries, setPage }) {
         <StatCard
           icon={CalendarDays}
           label="Cycle length"
-          value={lastPeriod ? "~28 days" : "—"}
+          value={lastPeriod ? `~${cycleLength} days` : "—"}
           sub="Your saved cycle setting"
           tint="lavender"
         />
