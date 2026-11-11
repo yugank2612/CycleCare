@@ -338,51 +338,68 @@ function App() {
   // SAVE CYCLE SETTINGS
   // ------------------------------------
 
-  async function saveCycle() {
-    if (!lastPeriod) {
-      flash("Choose the first day of your most recent period.");
-      return;
-    }
-
-    if (
-      lastPeriod > dateKey(new Date()) ||
-      cycleLength < 15 ||
-      cycleLength > 45 ||
-      periodLength < 1 ||
-      periodLength > 10
-    ) {
-      flash("Please check the cycle date and length values.");
-      return;
-    }
-
-    if (isCloud) {
-      try {
-        const { error } = await supabase
-          .from("profiles")
-          .upsert({
-            id: session.user.id,
-            last_period_start: lastPeriod,
-            cycle_length: Number(cycleLength),
-            period_length: Number(periodLength)
-          });
-
-        if (error) {
-          flash("Could not save cycle settings. Please try again.");
-          return;
-        }
-      } catch {
-        flash("Could not connect to save cycle settings.");
-        return;
-      }
-    } else {
-      const saved = localSave();
-
-      if (!saved) return;
-    }
-
-    flash("Cycle settings saved.");
+ async function saveCycle() {
+  if (!lastPeriod) {
+    flash("Choose the first day of your most recent period.");
+    return;
   }
 
+  const cycle = Number(cycleLength);
+  const period = Number(periodLength);
+
+  if (lastPeriod > dateKey(new Date())) {
+    flash("The last period date cannot be in the future.");
+    return;
+  }
+
+  if (
+    !Number.isInteger(cycle) ||
+    cycle < 15 ||
+    cycle > 45
+  ) {
+    flash("Cycle length must be a whole number between 15 and 45.");
+    return;
+  }
+
+  if (
+    !Number.isInteger(period) ||
+    period < 1 ||
+    period > 10
+  ) {
+    flash("Period duration must be a whole number between 1 and 10.");
+    return;
+  }
+
+  if (isCloud) {
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .upsert({
+          id: session.user.id,
+          last_period_start: lastPeriod,
+          cycle_length: cycle,
+          period_length: period
+        });
+
+      if (error) {
+        flash("Could not save cycle settings. Please try again.");
+        return;
+      }
+    } catch {
+      flash("Could not connect to save cycle settings.");
+      return;
+    }
+  } else {
+    const saved = localSave();
+
+    if (!saved) return;
+  }
+
+  setCycleLength(cycle);
+  setPeriodLength(period);
+
+  flash("Cycle settings saved.");
+}
   // ------------------------------------
   // SAVE JOURNAL ENTRY
   // ------------------------------------
@@ -1202,7 +1219,6 @@ function Quick({ icon: Icon, title, text, click }) {
 // ====================================
 // CYCLE TRACKER
 // ====================================
-
 function Tracker({
   lastPeriod,
   setLastPeriod,
@@ -1224,9 +1240,46 @@ function Tracker({
     ? parseLocalDate(lastPeriod)
     : null;
 
-  const next = first
-    ? addDays(first, Number(cycleLength))
+  // Use the same next-period estimate as the dashboard.
+  const predictedStart = summary?.nextDate
+    ? parseLocalDate(summary.nextDate)
     : null;
+
+  const cycleDays = Number(cycleLength);
+  const periodDays = Number(periodLength);
+
+  // Convert local calendar dates into whole UTC day numbers.
+  const toDayNumber = (date) =>
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    ) / 86400000;
+
+  // Highlight each estimated future period,
+  // not just the first upcoming period.
+  const isPredictedPeriodDay = (date) => {
+    if (
+      !predictedStart ||
+      !Number.isInteger(cycleDays) ||
+      cycleDays < 15 ||
+      cycleDays > 45 ||
+      !Number.isInteger(periodDays) ||
+      periodDays < 1 ||
+      periodDays > 10
+    ) {
+      return false;
+    }
+
+    const daysSincePrediction =
+      toDayNumber(date) - toDayNumber(predictedStart);
+
+    if (daysSincePrediction < 0) {
+      return false;
+    }
+
+    return daysSincePrediction % cycleDays < periodDays;
+  };
 
   return (
     <>
@@ -1245,6 +1298,7 @@ function Tracker({
               <span className="eyebrow">YOUR CYCLE SETTINGS</span>
               <h2>Let's start with the basics</h2>
             </div>
+
             <div className="round-icon">
               <CalendarDays/>
             </div>
@@ -1256,8 +1310,8 @@ function Tracker({
               <input
                 type="date"
                 value={lastPeriod}
-                onChange={e => setLastPeriod(e.target.value)}
                 max={dateKey(new Date())}
+                onChange={e => setLastPeriod(e.target.value)}
               />
             </Field>
 
@@ -1267,8 +1321,15 @@ function Tracker({
                   type="number"
                   min="15"
                   max="45"
+                  step="1"
                   value={cycleLength}
-                  onChange={e => setCycleLength(Number(e.target.value))}
+                  onChange={e =>
+                    setCycleLength(
+                      e.target.value === ""
+                        ? ""
+                        : Number(e.target.value)
+                    )
+                  }
                 />
                 <span>days</span>
               </div>
@@ -1280,8 +1341,15 @@ function Tracker({
                   type="number"
                   min="1"
                   max="10"
+                  step="1"
                   value={periodLength}
-                  onChange={e => setPeriodLength(Number(e.target.value))}
+                  onChange={e =>
+                    setPeriodLength(
+                      e.target.value === ""
+                        ? ""
+                        : Number(e.target.value)
+                    )
+                  }
                 />
                 <span>days</span>
               </div>
@@ -1289,13 +1357,17 @@ function Tracker({
 
           </div>
 
-          <button className="btn-primary" onClick={onSave}>
-            Save my settings <CheckCircle2 size={16}/>
+          <button
+            className="btn-primary"
+            onClick={onSave}
+          >
+            Save my settings
+            <CheckCircle2 size={16}/>
           </button>
 
           <p className="helper">
-            Cycle length is counted from the first day of one period
-            to the first day of the next.
+            Cycle length is counted from the first day
+            of one period to the first day of the next.
           </p>
 
         </section>
@@ -1306,13 +1378,11 @@ function Tracker({
 
           <div className="estimate-number">
             {summary
-              ? summary.daysUntil >= 0
-                ? summary.daysUntil
-                : "—"
+              ? summary.daysUntil
               : "—"}
 
             <small>
-              {summary && summary.daysUntil >= 0 ? "days" : " "}
+              {summary ? "days" : " "}
             </small>
           </div>
 
@@ -1328,7 +1398,8 @@ function Tracker({
                   summary.nextDate + "T00:00:00"
                 ).toLocaleDateString(undefined, {
                   month: "long",
-                  day: "numeric"
+                  day: "numeric",
+                  year: "numeric"
                 })}`
               : "Add your last period date to see an estimate."}
           </p>
@@ -1339,6 +1410,7 @@ function Tracker({
           </div>
 
         </section>
+
       </div>
 
       <section className="panel calendar-panel">
@@ -1347,6 +1419,7 @@ function Tracker({
 
           <div>
             <span className="eyebrow">YOUR MONTH</span>
+
             <h2>
               {month.toLocaleDateString(undefined, {
                 month: "long",
@@ -1367,6 +1440,7 @@ function Tracker({
                   )
                 )
               }
+              aria-label="Previous month"
             >
               <ChevronLeft/>
             </button>
@@ -1381,50 +1455,66 @@ function Tracker({
                   )
                 )
               }
+              aria-label="Next month"
             >
               <ChevronRight/>
             </button>
 
           </div>
+
         </div>
 
         <div className="calendar-grid">
 
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map(d => (
-            <div className="weekday" key={d}>{d}</div>
+          {[
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat"
+          ].map(day => (
+            <div className="weekday" key={day}>
+              {day}
+            </div>
           ))}
 
-          {cells.map((d, i) => {
+          {cells.map((date, index) => {
 
-            if (!d) {
-              return <div key={`blank-${i}`}/>;
+            if (!date) {
+              return (
+                <div key={`blank-${index}`}/>
+              );
             }
 
-            const isPastPeriod =
+            // Last recorded period.
+            const isRecordedPeriod =
               first &&
-              d >= first &&
-              d < addDays(first, periodLength);
+              date >= first &&
+              date < addDays(first, periodDays);
 
-            const isPred =
-              next &&
-              d >= next &&
-              d < addDays(next, periodLength);
+            // Every future estimated cycle period.
+            const isPredicted =
+              isPredictedPeriodDay(date);
 
-            const today =
-              dateKey(d) === dateKey(new Date());
+            const isToday =
+              dateKey(date) === dateKey(new Date());
 
             return (
               <div
-                key={i}
+                key={index}
                 className={`calendar-day ${
-                  isPastPeriod ? "period-day" : ""
+                  isRecordedPeriod ? "period-day" : ""
                 } ${
-                  isPred ? "predicted-day" : ""
+                  isPredicted && !isRecordedPeriod
+                    ? "predicted-day"
+                    : ""
                 } ${
-                  today ? "today" : ""
+                  isToday ? "today" : ""
                 }`}
               >
-                {d.getDate()}
+                {date.getDate()}
               </div>
             );
           })}
@@ -1432,21 +1522,35 @@ function Tracker({
         </div>
 
         <div className="legend">
-          <span><i className="legend-period"/>Recorded period</span>
-          <span><i className="legend-predicted"/>Estimated period</span>
-          <span><i className="legend-today"/>Today</span>
+          <span>
+            <i className="legend-period"/>
+            Recorded period
+          </span>
+
+          <span>
+            <i className="legend-predicted"/>
+            Estimated period
+          </span>
+
+          <span>
+            <i className="legend-today"/>
+            Today
+          </span>
         </div>
 
       </section>
 
       <div className="info-strip">
         <ShieldCheck size={18}/>
+
         <p>
           Cycle predictions can be less reliable when cycles vary,
-          after a recent change in routine, or during the first years
-          after periods begin. Do not use predictions to prevent pregnancy.
+          after a recent change in routine, or during the first
+          years after periods begin. Do not use predictions
+          to prevent pregnancy.
         </p>
       </div>
+
     </>
   );
 }
