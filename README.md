@@ -2,11 +2,29 @@
 
 ### Your Wellness. Your Privacy. Your Journey.
 
-CycleCare is a modern, responsive menstrual wellness web application prototype designed to make menstrual health information, personal cycle tracking, and wellness resources more accessible.
+**CycleCare** is a modern, responsive menstrual wellness web application prototype designed to make menstrual health education, personal cycle tracking, and wellness resources more accessible.
 
-Built with **React, Vite, JavaScript, and Supabase**, CycleCare combines a user-friendly interface with optional authentication and a privacy-focused database foundation.
+Built using **React, JavaScript, Vite, and Supabase**, CycleCare combines an intuitive user interface with optional authentication and a privacy-conscious database foundation.
 
 **Track. Understand. Learn.**
+
+[![GitHub](https://img.shields.io/badge/GitHub-yugank2612-181717?style=for-the-badge&logo=github)](https://github.com/yugank2612/CycleCare)
+[![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
+---
+
+## 🌐 Live Application
+
+**Live Demo:**  
+https://yugank2612.github.io/CycleCare/
+
+**GitHub Repository:**  
+https://github.com/yugank2612/CycleCare
+
+The application is a demonstration project. Some features require additional configuration, and the current implementation is not intended for production health-data collection.
 
 ---
 
@@ -15,12 +33,14 @@ Built with **React, Vite, JavaScript, and Supabase**, CycleCare combines a user-
 CycleCare brings menstrual wellness tools and educational resources together in one application.
 
 The project focuses on:
+
 - Personal cycle tracking.
 - Menstrual health journaling.
 - Wellness education.
 - Period-care product discovery.
+- Healthcare resource navigation.
 - Privacy-conscious application design.
-- Accessible and responsive user experiences.
+- Responsive user experiences.
 
 **Project Status:** Development / Demonstration Project
 
@@ -28,42 +48,92 @@ The project focuses on:
 
 ## ✨ Features
 
-### 📅 Cycle Tracking
-- Period settings.
-- Cycle calendar.
-- Approximate cycle predictions.
-- Personalized cycle information.
+### 📅 1. Menstrual Cycle Tracking
 
-### 📝 Health Journal
-- Flow tracking.
-- Symptom recording.
-- Mood tracking.
-- Private personal notes.
+- Record the first day of the most recent period.
+- Configure typical cycle length.
+- Configure typical period duration.
+- View a monthly calendar.
+- Display approximate cycle information.
+- View estimated next-period dates.
 
-### 🛍️ Period-Care Resources
-- Menstrual care product catalogue.
-- Saved product list.
-- Product discovery experience.
+Cycle estimates are informational and are not medical predictions.
 
-The current catalogue is informational. It does not process purchases or payments.
+### 📝 2. Personal Health Journal
 
-### 📚 Menstrual Health Education
-- Educational resources.
-- Menstrual health information.
-- Wellness-focused content.
+- Record daily check-ins.
+- Track flow information.
+- Record symptoms.
+- Track mood.
+- Add personal notes.
+- Review recent journal entries.
+- Delete individual entries.
 
-### 🏥 Healthcare Resources
-- Doctor-finding information.
-- External healthcare directory links.
+### 🛍️ 3. Period-Care Resources
 
-External links are informational and do not represent a verified provider directory or appointment booking service.
+Explore common menstrual-care product categories:
 
-### 🔐 Privacy & Account Features
+- Sanitary pads.
+- Reusable cloth pads.
+- Menstrual cups.
+- Period underwear.
+- Heating pads.
+- Period pouches.
+
+The catalogue is informational. Product purchases and payment processing are not implemented.
+
+### 📚 4. Menstrual Health Education
+
+Educational sections covering:
+
+- Understanding the menstrual cycle.
+- Period hygiene.
+- Choosing menstrual products.
+- PMS and common symptoms.
+- PCOS and endometriosis awareness.
+- When to seek healthcare support.
+
+### 🏥 5. Healthcare Resources
+
+- Healthcare information.
+- External clinician-directory links.
+- Government health-resource links.
+- Appointment preparation guidance.
+
+External directories are starting points only. Providers and appointment availability are not independently verified by CycleCare.
+
+### 🔐 6. Privacy & Account Management
+
 - Optional Supabase authentication.
 - PostgreSQL database integration.
-- Row Level Security (RLS) policies.
-- Data export and deletion controls.
-- Local preview mode when Supabase is not configured.
+- Row Level Security policies.
+- Local demonstration mode.
+- Personal data export functionality.
+- Journal and cycle-data deletion controls.
+
+Cloud authentication and synchronization require Supabase configuration.
+
+---
+
+## 🖥️ Application Preview
+
+Application screenshots and demonstrations will be added here.
+
+### Main Dashboard
+
+<!-- Add screenshot: docs/images/dashboard.png -->
+
+### Cycle Tracker
+
+<!-- Add screenshot: docs/images/cycle-tracker.png -->
+
+### Health Journal
+
+<!-- Add screenshot: docs/images/health-journal.png -->
+
+### Privacy & Settings
+
+<!-- Add screenshot: docs/images/privacy.png -->
 
 ---
 
@@ -72,31 +142,62 @@ External links are informational and do not represent a verified provider direct
 | Category | Technologies |
 |---|---|
 | Frontend | React 18 |
-| Build Tool | Vite 6 |
 | Programming Language | JavaScript |
+| Build Tool | Vite 6 |
 | UI Icons | Lucide React |
 | Charts | Recharts |
 | Authentication | Supabase Auth |
 | Database | PostgreSQL |
 | Database Security | Row Level Security |
 | Backend Services | Supabase |
-| Deployment | GitHub Pages |
+| Testing | Node.js Test Runner |
 | CI/CD | GitHub Actions |
+| Deployment | GitHub Pages |
 | Version Control | Git & GitHub |
 
 ---
 
-## 🖥️ Application Preview
+## 📁 Project Structure
 
-Screenshots and visual demonstrations will be added here as the project documentation develops.
-
-<!-- Add actual application screenshots in docs/images/ when available. -->
+```text
+CycleCare/
+│
+├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   │   └── bug_report.md
+│   │
+│   └── workflows/
+│       └── deploy.yml
+│
+├── src/
+│   ├── lib/
+│   │   ├── cycle.js
+│   │   └── supabase.js
+│   │
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── styles.css
+│
+├── supabase/
+│   └── schema.sql
+│
+├── tests/
+│   └── cycle.test.js
+│
+├── .gitignore
+├── env.example
+├── index.html
+├── package.json
+├── README.md
+├── SECURITY.md
+└── vite.config.js
+```
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these instructions to run CycleCare on your local computer.
+Follow these instructions to run CycleCare locally.
 
 ### Prerequisites
 
@@ -114,27 +215,27 @@ npm --version
 git --version
 ```
 
-### Step 1: Clone the repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone https://github.com/yugank2612/CycleCare.git
 ```
 
-### Step 2: Open the project directory
+### Step 2: Navigate to the Project
 
 ```bash
 cd CycleCare
 ```
 
-### Step 3: Install dependencies
+### Step 3: Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Step 4: Configure environment variables
+### Step 4: Configure Environment Variables
 
-The repository includes an `env.example` file.
+The repository contains an `env.example` template.
 
 Create your local environment file.
 
@@ -150,9 +251,9 @@ Copy-Item env.example .env.local
 cp env.example .env.local
 ```
 
-For local preview mode, Supabase configuration is optional.
+For local demonstration mode, Supabase configuration is optional.
 
-If you want to enable Supabase, configure the following variables in `.env.local`:
+To enable Supabase, update `.env.local`:
 
 ```env
 VITE_SUPABASE_URL=your_supabase_project_url
@@ -160,29 +261,31 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 VITE_BASE_PATH=/
 ```
 
-Replace the example values with your own public Supabase project configuration.
+Replace the example values with the appropriate public Supabase project configuration.
 
-Never put a Supabase `service_role` key or other private credentials into frontend environment variables.
+Never put private credentials or Supabase service-role keys in frontend environment variables.
 
-### Step 5: Start the development server
+### Step 5: Start the Development Server
 
 ```bash
 npm run dev
 ```
 
-Vite will display a local development URL in your terminal.
+Open the local development URL displayed in your terminal.
 
-Open that URL in your browser.
-
-### Step 6: Build for production
+### Step 6: Build for Production
 
 ```bash
 npm run build
 ```
 
-The production build will be generated in the `dist/` directory.
+The production files will be generated inside:
 
-### Step 7: Preview the production build
+```text
+dist/
+```
+
+### Step 7: Preview the Production Build
 
 ```bash
 npm run preview
@@ -190,11 +293,57 @@ npm run preview
 
 ---
 
+## 🧪 Automated Testing
+
+CycleCare uses the built-in Node.js test runner to verify its date and cycle-calculation utilities.
+
+### Run Tests Locally
+
+```bash
+npm test
+```
+
+### Current Test Coverage
+
+The automated test suite contains nine test cases covering:
+
+1. Valid leap-year dates.
+2. Invalid calendar dates.
+3. Date formatting.
+4. Adding days across leap-year boundaries.
+5. Initial cycle calculations.
+6. Exact cycle-boundary calculations.
+7. Cycle progression after a boundary.
+8. Invalid cycle inputs.
+9. Calendar generation.
+
+### Continuous Integration
+
+GitHub Actions automatically runs the test suite before generating the production build.
+
+The workflow follows this sequence:
+
+1. Checkout repository.
+2. Set up Node.js.
+3. Install dependencies.
+4. Execute automated tests.
+5. Build the CycleCare application.
+6. Upload the production build.
+7. Deploy to GitHub Pages.
+
+Deployment continues only when the required test and build steps succeed.
+
+**View GitHub Actions:**
+
+https://github.com/yugank2612/CycleCare/actions
+
+---
+
 ## 🗄️ Supabase Configuration
 
 CycleCare supports optional Supabase authentication and database integration.
 
-### Step 1: Create a Supabase project
+### Step 1: Create a Supabase Project
 
 Visit:
 
@@ -202,25 +351,28 @@ https://supabase.com/
 
 Create a project and configure its database.
 
-### Step 2: Configure the database
+### Step 2: Configure the Database
 
 Open the Supabase SQL Editor.
 
-Execute the SQL file:
+Execute:
 
-`supabase/schema.sql`
+```text
+supabase/schema.sql
+```
 
-The schema includes:
+The database schema includes:
+
 - User profiles.
 - Cycle entries.
 - Database indexes.
 - Row Level Security.
-- User-specific database policies.
+- User-specific access policies.
 - Automatic profile creation after signup.
 
-Review the database policies before connecting any real personal health information.
+Review the schema and access policies before connecting real personal health information.
 
-### Step 3: Configure authentication
+### Step 3: Configure Authentication
 
 In Supabase Authentication settings:
 
@@ -228,10 +380,11 @@ In Supabase Authentication settings:
 2. Configure email confirmation.
 3. Set appropriate redirect URLs.
 4. Configure account recovery settings.
+5. Review password and authentication security.
 
-### Step 4: Configure environment variables
+### Step 4: Configure Environment Variables
 
-Add the following to `.env.local`:
+Update `.env.local`:
 
 ```env
 VITE_SUPABASE_URL=your_supabase_project_url
@@ -239,63 +392,63 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 VITE_BASE_PATH=/
 ```
 
-Restart the development server after making changes.
+Restart the development server after making configuration changes.
 
-**Security reminder:** The frontend Supabase anon/publishable key is intended for browser use only when appropriate database access policies are correctly configured. Never expose a `service_role` key.
+**Security reminder:** Never expose a Supabase `service_role` key in frontend code or public repositories. Browser-accessible keys require correctly configured Row Level Security.
 
 ---
 
 ## 🌐 Deployment
 
-CycleCare includes a GitHub Actions workflow for GitHub Pages deployment.
+CycleCare uses GitHub Actions for automated GitHub Pages deployment.
 
 ### GitHub Pages
 
-The workflow is located at:
+The deployment workflow is located at:
 
-`.github/workflows/deploy.yml`
+```text
+.github/workflows/deploy.yml
+```
 
-It:
-- Runs when changes are pushed to the `main` branch.
-- Installs project dependencies.
-- Builds the React application using Vite.
-- Uploads the production build.
-- Deploys the application to GitHub Pages.
+It is configured to run when code is pushed to the `main` branch or when manually triggered.
 
 ### Deployment Configuration
 
-The repository workflow uses:
+The GitHub Actions workflow uses:
 
-```env
-VITE_BASE_PATH=/CycleCare/
+```yaml
+VITE_BASE_PATH: /CycleCare/
 ```
 
-This matches the current repository name and Vite configuration.
+This matches the current GitHub repository name and the Vite base-path configuration.
 
 ### GitHub Pages Setup
 
-1. Open your repository settings.
-2. Select Pages.
-3. Set the deployment source to GitHub Actions.
-4. Check the Actions tab for workflow results.
-5. Confirm that the deployment completes successfully.
+1. Open the repository Settings.
+2. Navigate to Pages.
+3. Select GitHub Actions as the deployment source.
+4. Open the Actions tab.
+5. Check the latest workflow execution.
+6. Confirm that both build and deployment jobs succeed.
 
-### Supabase Variables for Deployment
+### Supabase Configuration for GitHub Actions
 
-If you want Supabase enabled in the deployed application:
+When enabling Supabase for the deployed application:
 
 Open:
 
-`Settings → Secrets and variables → Actions → Variables`
+```text
+Settings → Secrets and variables → Actions → Variables
+```
 
-Add:
+Configure:
 
 | Variable | Value |
 |---|---|
 | VITE_SUPABASE_URL | Your Supabase project URL |
 | VITE_SUPABASE_ANON_KEY | Your public anon/publishable key |
 
-These values are included in browser assets during the Vite build. Never place service-role keys in this configuration.
+These values are included in browser assets during the build. Never place service-role keys in these variables.
 
 ### Alternative Hosting
 
@@ -309,73 +462,86 @@ Recommended build settings:
 | Output Directory | `dist` |
 | Base Path | `/` |
 
-Configure the same public Supabase environment variables when enabling Supabase.
+Configure the required public Supabase environment variables if cloud functionality is enabled.
 
 ---
 
 ## 🔐 Security & Privacy
 
-Privacy is an important part of CycleCare's design.
+Privacy is an important design consideration in CycleCare.
 
-The project includes:
+The current project includes:
+
 - Supabase authentication integration.
 - PostgreSQL Row Level Security policies.
-- User-specific access policies.
+- User-specific database access.
 - Environment-based configuration.
 - Data export and deletion controls.
+- A local demonstration mode.
 
-### Important Security Practices
+### Security Practices
 
 - Never commit API secrets or private credentials.
 - Never expose Supabase service-role keys in frontend code.
-- Keep environment files out of version control.
-- Review Row Level Security policies before using real data.
+- Keep local environment files out of version control.
+- Review RLS policies before enabling real-data usage.
 - Avoid sending sensitive health information to analytics or advertising services.
 - Use HTTPS for deployed applications.
 - Review third-party integrations before enabling them.
+- Establish clear data retention and deletion procedures.
 
-Read the full security documentation:
+Read the dedicated security documentation:
 
 [SECURITY.md](./SECURITY.md)
+
+### Before Real-World Use
+
+CycleCare requires additional independent privacy, security, legal, and safeguarding review before collecting real personal health information.
+
+This includes reviewing authentication, access controls, data retention, account deletion, backups, third-party services, consent, and age-appropriate safeguards.
 
 ---
 
 ## ⚠️ Project Limitations
 
-CycleCare is currently a demonstration and development project.
+CycleCare is currently a development and demonstration project.
 
-Please understand the following limitations:
+Please note:
 
-- Cycle predictions are estimates and may not be accurate.
+- Cycle predictions are approximate estimates and may be inaccurate.
 - Cycle tracking is not a medical diagnosis or contraceptive method.
-- The product catalogue does not include checkout or payment processing.
-- Healthcare directory links are not a verified provider directory.
+- Product listings are informational and do not support checkout or payment processing.
+- Healthcare links are not a verified provider directory.
 - Doctor appointment booking is not implemented.
-- AI health assistance and community messaging are not included.
-- Local preview mode uses browser storage and is not appropriate for sensitive information on shared devices.
-- Authentication and database configuration require additional security review before real-world use.
+- Community messaging and notifications are not implemented.
+- Local preview mode uses browser storage and is not secure multi-user storage.
+- Cloud authentication requires Supabase configuration.
+- The current test suite primarily covers date and cycle utility functions.
+- Application-wide security and privacy audits are not yet complete.
 
-CycleCare is not a substitute for professional medical advice.
+CycleCare does not replace professional medical advice.
 
-The application should not be used to diagnose medical conditions.
+The application should not be used to diagnose medical conditions or make medical decisions.
 
 ---
 
 ## 🗺️ Development Roadmap
 
-The following are planned development goals, not claims of completed functionality.
+The following are planned improvement areas, not claims that the features are already implemented.
 
-- [ ] Improve application accessibility.
 - [ ] Add polished application screenshots.
-- [ ] Improve mobile user experience.
-- [ ] Expand menstrual health educational resources.
-- [ ] Complete additional privacy and security testing.
-- [ ] Review database access policies.
-- [ ] Improve error handling and validation.
-- [ ] Add Hindi and English localization.
-- [ ] Review healthcare content with qualified professionals.
-- [ ] Evaluate consent and age-appropriate safeguards.
-- [ ] Conduct independent privacy and security assessments before any real-world health-data launch.
+- [ ] Improve responsive application layouts.
+- [ ] Expand automated test coverage.
+- [ ] Improve application error handling.
+- [ ] Improve date and input validation.
+- [ ] Improve complete personal-data export.
+- [ ] Improve dependency management with a package lockfile.
+- [ ] Improve accessibility.
+- [ ] Expand Hindi and English localization.
+- [ ] Review Supabase access policies.
+- [ ] Improve privacy and consent documentation.
+- [ ] Obtain qualified clinical review of educational content.
+- [ ] Complete independent privacy and security assessments before real-world launch.
 
 ---
 
@@ -383,22 +549,38 @@ The following are planned development goals, not claims of completed functionali
 
 Suggestions, bug reports, and development feedback are welcome.
 
-To suggest an improvement:
+### Reporting a Bug
 
-1. Open an issue describing the problem or proposed feature.
-2. Include steps to reproduce bugs where possible.
-3. Discuss larger changes before implementing them.
-4. Submit a pull request with a clear explanation of your changes.
+Use the GitHub Issues section and the available bug report template.
 
-Please do not submit real personal health information in public issues or pull requests.
+https://github.com/yugank2612/CycleCare/issues
+
+Please include:
+
+- A clear description of the issue.
+- Steps to reproduce.
+- Expected behaviour.
+- Actual behaviour.
+- Browser and operating system information.
+
+**Privacy reminder:** Never include real period dates, symptoms, health records, account credentials, or personal health screenshots in public issues.
+
+### Contribution Guidelines
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Implement your changes.
+4. Run the automated tests.
+5. Run the production build.
+6. Submit a pull request with a clear description.
 
 ---
 
 ## 📄 License
 
-No license has currently been specified for this repository.
+No open-source license has currently been specified for this repository.
 
-Unless a license is added by the repository owner, the code should not be assumed to be available for unrestricted reuse.
+Unless a license is added by the repository owner, the code should not be assumed to be available for unrestricted reuse, modification, or redistribution.
 
 ---
 
@@ -408,9 +590,10 @@ Unless a license is added by the repository owner, the code should not be assume
 
 Student Developer | Full-Stack Development | AI Engineering
 
-- GitHub: https://github.com/yugank2612
-- Project: https://github.com/yugank2612/CycleCare
-- Portfolio: https://yugank2612.github.io/yugank-portfolio/
+- **GitHub:** https://github.com/yugank2612
+- **Portfolio:** https://yugank2612.github.io/yugank-portfolio/
+- **Project Repository:** https://github.com/yugank2612/CycleCare
+- **LinkedIn:** https://www.linkedin.com/in/yugank-141512326/
 
 ---
 
@@ -418,8 +601,8 @@ Student Developer | Full-Stack Development | AI Engineering
 
 CycleCare is a learning-driven software project exploring how modern web development, thoughtful product design, and privacy-conscious engineering can support menstrual wellness education.
 
-**Built with curiosity. Designed with care. Developed with purpose.**
-
----
+Built with curiosity. Designed with care. Developed with purpose.
 
 **YUGANK — Build. Explain. Create.**
+
+*Learning continuously. Building practically. Improving consistently.*
