@@ -25,100 +25,127 @@ const NAV = [
   ["Learn", "learn", BookOpen],
   ["Privacy", "privacy", ShieldCheck]
 ];
-
 const products = [
-  // Keep the first six positions unchanged
-  // so existing saved-care-list indices remain valid.
-
   {
     icon: "🩹",
     name: "Sanitary pads",
-    desc: "Disposable options in different sizes and absorbencies.",
+    desc: "Disposable pads in different sizes and absorbencies.",
     tag: "Period care",
-    price: "Availability varies",
-    group: "period"
+    price: "Check seller",
+    group: "period",
+    seller: "Avni Wellness",
+    buyLabel: "Browse Avni",
+    buyUrl: "https://www.myavni.com/collections/concern-periods"
   },
   {
     icon: "🌿",
     name: "Reusable cloth pads",
-    desc: "Washable options. Follow the product's washing and drying instructions.",
+    desc: "Washable menstrual-care products. Follow care instructions.",
     tag: "Reusable",
-    price: "Availability varies",
-    group: "period"
+    price: "Check seller",
+    group: "period",
+    seller: "Avni Wellness",
+    buyLabel: "Browse Avni",
+    buyUrl: "https://www.myavni.com/collections/shop-all"
   },
   {
     icon: "🌸",
     name: "Menstrual cups",
-    desc: "A reusable menstrual product. Read product instructions and choose what feels appropriate.",
+    desc: "Reusable menstrual products. Read product instructions before choosing.",
     tag: "Reusable",
-    price: "Availability varies",
-    group: "period"
+    price: "Check seller",
+    group: "period",
+    seller: "Avni Wellness",
+    buyLabel: "Browse Avni",
+    buyUrl: "https://www.myavni.com/collections/concern-periods"
   },
   {
     icon: "🩲",
     name: "Period underwear",
-    desc: "Absorbent underwear available in different styles.",
+    desc: "Reusable absorbent underwear in different styles.",
     tag: "Comfort",
-    price: "Availability varies",
-    group: "period"
+    price: "Check seller",
+    group: "period",
+    seller: "SochGreen",
+    buyLabel: "Browse SochGreen",
+    buyUrl: "https://www.sochgreen.com/shop-reusable-period-products/"
   },
   {
     icon: "🔥",
-    name: "Heating pad",
-    desc: "An external warmth option. Follow the manufacturer's safety instructions.",
+    name: "Heating and comfort packs",
+    desc: "External warmth products. Follow manufacturer safety instructions.",
     tag: "Comfort",
-    price: "Availability varies",
-    group: "period"
+    price: "Check seller",
+    group: "period",
+    seller: "SochGreen",
+    buyLabel: "Browse SochGreen",
+    buyUrl: "https://www.sochgreen.com/shop-reusable-period-products/"
   },
   {
     icon: "👜",
     name: "Period pouch",
-    desc: "Organise period-care essentials for school, travel or everyday use.",
+    desc: "Carry your period-care essentials conveniently.",
     tag: "Essentials",
-    price: "Availability varies",
-    group: "period"
+    price: "Check seller",
+    group: "period",
+    seller: "Amazon search",
+    buyLabel: "Search Amazon",
+    buyUrl: "https://www.amazon.in/s?k=period+pouch"
   },
-
-  // Daily-use essentials
   {
     icon: "👙",
     name: "Spare underwear",
     desc: "Keep a clean spare pair available when away from home.",
     tag: "Daily use",
-    price: "Availability varies",
-    group: "daily"
+    price: "Check seller",
+    group: "daily",
+    seller: "Amazon search",
+    buyLabel: "Search Amazon",
+    buyUrl: "https://www.amazon.in/s?k=cotton+underwear+women"
   },
   {
     icon: "🛍️",
-    name: "Disposal bags",
-    desc: "Small bags for wrapping used disposable products before disposal. Follow local waste rules.",
+    name: "Sanitary disposal bags",
+    desc: "Bags for wrapping used disposable products before disposal.",
     tag: "Hygiene",
-    price: "Availability varies",
-    group: "daily"
+    price: "Check seller",
+    group: "daily",
+    seller: "Amazon search",
+    buyLabel: "Search Amazon",
+    buyUrl: "https://www.amazon.in/s?k=sanitary+pad+disposal+bags"
   },
   {
     icon: "🧻",
-    name: "Soft washcloth",
-    desc: "Useful for gentle external cleaning with water.",
+    name: "Soft cotton washcloth",
+    desc: "A reusable cloth for gentle external cleaning with water.",
     tag: "Hygiene",
-    price: "Availability varies",
-    group: "daily"
+    price: "Check seller",
+    group: "daily",
+    seller: "Amazon search",
+    buyLabel: "Search Amazon",
+    buyUrl: "https://www.amazon.in/s?k=soft+cotton+washcloth"
   },
   {
     icon: "💧",
     name: "Reusable water bottle",
-    desc: "A convenient way to keep water available throughout the day.",
+    desc: "A convenient way to keep drinking water available.",
     tag: "Hydration",
-    price: "Availability varies",
-    group: "daily"
+    price: "Check seller",
+    group: "daily",
+    seller: "Amazon search",
+    buyLabel: "Search Amazon",
+    buyUrl: "https://www.amazon.in/s?k=reusable+water+bottle"
   },
   {
     icon: "🧺",
     name: "Small laundry pouch",
     desc: "Keep used washable items separate until they can be cleaned.",
     tag: "Daily use",
-    price: "Availability varies",
-    group: "daily"
+    price: "Check seller",
+    group: "daily",
+    seller: "Amazon search",
+    buyLabel: "Search Amazon",
+    buyUrl: "https://www.amazon.in/s?k=delicates+laundry+wash+bag"
   }
 ];
 
@@ -1878,12 +1905,14 @@ function Shop({ cart, addCart }) {
 
     return (
       <article className="product-card" key={p.name}>
+
         <div className="product-visual">
           <span>{p.icon}</span>
           <i>{p.tag}</i>
         </div>
 
         <div className="product-copy">
+
           <h3>{p.name}</h3>
           <p>{p.desc}</p>
 
@@ -1899,6 +1928,23 @@ function Shop({ cart, addCart }) {
                 : "Save item"}
             </button>
           </div>
+
+          <div className="product-buy-row">
+            <a
+              className="btn-primary buy-link"
+              href={p.buyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {p.buyLabel}
+              <ArrowUpRight size={14}/>
+            </a>
+
+            <span className="seller-name">
+              Seller: {p.seller}
+            </span>
+          </div>
+
         </div>
       </article>
     );
@@ -1908,11 +1954,26 @@ function Shop({ cart, addCart }) {
     <>
       <PageHeading
         eyebrow="YOUR EVERYDAY WELLNESS"
-        title="Period care, everyday essentials & more."
-        desc="Explore useful period-care products, daily essentials and balanced food ideas."
+        title="Care Essentials"
+        desc="Explore menstrual-care products and everyday essentials from external retailers."
       />
 
+      <div className="notice-card">
+        <ShoppingBag size={20}/>
+
+        <div>
+          <b>Shop from external sellers</b>
+          <p>
+            CycleCare does not sell products or collect payments.
+            Purchase links open third-party retailer websites.
+            Prices, delivery, stock and returns are controlled
+            by the respective sellers.
+          </p>
+        </div>
+      </div>
+
       <section className="shop-section">
+
         <div className="section-head">
           <div>
             <span className="eyebrow">PERIOD CARE</span>
@@ -1923,9 +1984,11 @@ function Shop({ cart, addCart }) {
         <div className="shop-grid">
           {periodProducts.map(renderProduct)}
         </div>
+
       </section>
 
       <section className="shop-section">
+
         <div className="section-head">
           <div>
             <span className="eyebrow">EVERYDAY ESSENTIALS</span>
@@ -1936,16 +1999,20 @@ function Shop({ cart, addCart }) {
         <div className="shop-grid">
           {dailyProducts.map(renderProduct)}
         </div>
+
       </section>
 
       <section className="panel appointment-panel">
+
         <span className="eyebrow">FOOD & HYDRATION</span>
+
         <h2>Everyday food ideas</h2>
 
         <p className="body-copy">
-          These are general food ideas, not treatments or
-          compulsory foods. Choose meals based on your
-          preferences, allergies and dietary needs.
+          General food ideas for everyday meals.
+          These are not treatments or compulsory foods.
+          Choose according to your preferences,
+          allergies and dietary requirements.
         </p>
 
         <div className="shop-grid">
@@ -1966,27 +2033,29 @@ function Shop({ cart, addCart }) {
             </article>
           ))}
         </div>
+
       </section>
 
       <section className="panel appointment-panel">
+
         <span className="eyebrow">OFFICIAL HEALTH RESOURCE</span>
+
         <h2>Affordable period-care information</h2>
 
         <p className="body-copy">
-          Learn about the Government of India's
-          Jan Aushadhi Suvidha sanitary-napkin programme
-          and the National Health Mission's menstrual
-          hygiene resources.
+          Explore government menstrual-hygiene
+          information and affordable period-care resources.
         </p>
 
         <div className="button-row">
+
           <a
             className="btn-light link-btn"
             href="https://janaushadhi.gov.in/about-pmbjb"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
-            Jan Aushadhi information
+            Jan Aushadhi
             <ArrowUpRight size={15}/>
           </a>
 
@@ -1994,20 +2063,25 @@ function Shop({ cart, addCart }) {
             className="btn-light link-btn"
             href="https://nhm.gov.in/nhm_live/index1.php?lang=1&level=3&lid=391&sublinkid=1021"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
-            Government hygiene scheme
+            National Health Mission
             <ArrowUpRight size={15}/>
           </a>
+
         </div>
+
       </section>
 
-      <div className="panel saved-list">
+      <section className="panel saved-list">
+
         <span className="eyebrow">YOUR CARE LIST</span>
 
         <h2>
           Saved essentials
-          <span className="count-pill">{cart.length}</span>
+          <span className="count-pill">
+            {cart.length}
+          </span>
         </h2>
 
         {cart.length ? (
@@ -2018,15 +2092,14 @@ function Shop({ cart, addCart }) {
           ))
         ) : (
           <p className="helper">
-            Save products you are interested in
-            and they will appear here.
+            Save products you are interested in.
           </p>
         )}
-      </div>
+
+      </section>
     </>
   );
 }
-
 
 // ====================================
 // HEALTHCARE RESOURCES
