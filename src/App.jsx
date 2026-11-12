@@ -21,56 +21,139 @@ const NAV = [
   ["Cycle tracker", "tracker", CalendarDays],
   ["My journal", "journal", Heart],
   ["Care shop", "shop", ShoppingBag],
-  ["Find a doctor", "doctors", Stethoscope],
+  ["Health services", "doctors", Stethoscope],
   ["Learn", "learn", BookOpen],
   ["Privacy", "privacy", ShieldCheck]
 ];
 
 const products = [
+  // Keep the first six positions unchanged
+  // so existing saved-care-list indices remain valid.
+
   {
-    icon: "🌷",
+    icon: "🩹",
     name: "Sanitary pads",
     desc: "Disposable options in different sizes and absorbencies.",
-    tag: "Everyday care",
-    price: "Varies"
+    tag: "Period care",
+    price: "Availability varies",
+    group: "period"
   },
   {
     icon: "🌿",
     name: "Reusable cloth pads",
-    desc: "Washable option. Follow care, washing and drying instructions.",
+    desc: "Washable options. Follow the product's washing and drying instructions.",
     tag: "Reusable",
-    price: "Varies"
+    price: "Availability varies",
+    group: "period"
   },
   {
     icon: "🌸",
     name: "Menstrual cups",
-    desc: "Reusable internal product; read sizing and safe-use instructions.",
+    desc: "A reusable menstrual product. Read product instructions and choose what feels appropriate.",
     tag: "Reusable",
-    price: "Varies"
+    price: "Availability varies",
+    group: "period"
   },
   {
     icon: "🩲",
     name: "Period underwear",
-    desc: "Absorbent underwear offered in different absorbencies.",
+    desc: "Absorbent underwear available in different styles.",
     tag: "Comfort",
-    price: "Varies"
+    price: "Availability varies",
+    group: "period"
   },
   {
     icon: "🔥",
     name: "Heating pad",
-    desc: "External warmth may help some people with cramps.",
+    desc: "An external warmth option. Follow the manufacturer's safety instructions.",
     tag: "Comfort",
-    price: "Varies"
+    price: "Availability varies",
+    group: "period"
   },
   {
     icon: "👜",
     name: "Period pouch",
-    desc: "A small organiser for carrying period-care essentials.",
+    desc: "Organise period-care essentials for school, travel or everyday use.",
     tag: "Essentials",
-    price: "Varies"
+    price: "Availability varies",
+    group: "period"
+  },
+
+  // Daily-use essentials
+  {
+    icon: "👙",
+    name: "Spare underwear",
+    desc: "Keep a clean spare pair available when away from home.",
+    tag: "Daily use",
+    price: "Availability varies",
+    group: "daily"
+  },
+  {
+    icon: "🛍️",
+    name: "Disposal bags",
+    desc: "Small bags for wrapping used disposable products before disposal. Follow local waste rules.",
+    tag: "Hygiene",
+    price: "Availability varies",
+    group: "daily"
+  },
+  {
+    icon: "🧻",
+    name: "Soft washcloth",
+    desc: "Useful for gentle external cleaning with water.",
+    tag: "Hygiene",
+    price: "Availability varies",
+    group: "daily"
+  },
+  {
+    icon: "💧",
+    name: "Reusable water bottle",
+    desc: "A convenient way to keep water available throughout the day.",
+    tag: "Hydration",
+    price: "Availability varies",
+    group: "daily"
+  },
+  {
+    icon: "🧺",
+    name: "Small laundry pouch",
+    desc: "Keep used washable items separate until they can be cleaned.",
+    tag: "Daily use",
+    price: "Availability varies",
+    group: "daily"
   }
 ];
 
+const foodIdeas = [
+  {
+    icon: "🍌",
+    name: "Fresh fruits",
+    desc: "Bananas, oranges and seasonal fruits are convenient snack options."
+  },
+  {
+    icon: "🥣",
+    name: "Curd or yogurt",
+    desc: "An everyday food option if you enjoy and tolerate dairy."
+  },
+  {
+    icon: "🫘",
+    name: "Dal, rajma and chana",
+    desc: "Everyday legumes provide protein, fibre and useful minerals."
+  },
+  {
+    icon: "🥜",
+    name: "Nuts and seeds",
+    desc: "Almonds, walnuts and seeds can be included in ordinary meals or snacks. Avoid any ingredients you are allergic to."
+  },
+  {
+    icon: "🥬",
+    name: "Leafy vegetables",
+    desc: "Spinach and other leafy vegetables add variety and nutrients to meals."
+  },
+  {
+    icon: "🍚",
+    name: "Regular balanced meals",
+    desc: "Roti, rice, oats, vegetables and protein-containing foods can all be part of everyday eating."
+  }
+];
 const education = [
   [
     "Understanding your cycle",
@@ -1781,97 +1864,193 @@ function Journal({
 // ====================================
 // CARE SHOP
 // ====================================
-
 function Shop({ cart, addCart }) {
+  const periodProducts = products.filter(
+    p => p.group === "period"
+  );
+
+  const dailyProducts = products.filter(
+    p => p.group === "daily"
+  );
+
+  function renderProduct(p) {
+    const index = products.indexOf(p);
+
+    return (
+      <article className="product-card" key={p.name}>
+        <div className="product-visual">
+          <span>{p.icon}</span>
+          <i>{p.tag}</i>
+        </div>
+
+        <div className="product-copy">
+          <h3>{p.name}</h3>
+          <p>{p.desc}</p>
+
+          <div className="product-bottom">
+            <b>{p.price}</b>
+
+            <button
+              className="btn-light"
+              onClick={() => addCart(index)}
+            >
+              {cart.includes(index)
+                ? "Saved ✓"
+                : "Save item"}
+            </button>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
   return (
     <>
       <PageHeading
-        eyebrow="THOUGHTFUL PERIOD ESSENTIALS"
-        title="A little care, ready when you need it."
-        desc="Explore common menstrual-care product categories. This catalogue is a demo; it does not sell products or process payments."
+        eyebrow="YOUR EVERYDAY WELLNESS"
+        title="Period care, everyday essentials & more."
+        desc="Explore useful period-care products, daily essentials and balanced food ideas."
       />
 
-      <div className="shop-grid">
+      <section className="shop-section">
+        <div className="section-head">
+          <div>
+            <span className="eyebrow">PERIOD CARE</span>
+            <h2>Menstrual-care products</h2>
+          </div>
+        </div>
 
-        {products.map((p, i) => (
-          <article className="product-card" key={p.name}>
+        <div className="shop-grid">
+          {periodProducts.map(renderProduct)}
+        </div>
+      </section>
 
-            <div className="product-visual">
-              <span>{p.icon}</span>
-              <i>{p.tag}</i>
-            </div>
+      <section className="shop-section">
+        <div className="section-head">
+          <div>
+            <span className="eyebrow">EVERYDAY ESSENTIALS</span>
+            <h2>Daily-use and comfort items</h2>
+          </div>
+        </div>
 
-            <div className="product-copy">
-              <h3>{p.name}</h3>
-              <p>{p.desc}</p>
+        <div className="shop-grid">
+          {dailyProducts.map(renderProduct)}
+        </div>
+      </section>
 
-              <div className="product-bottom">
-                <b>{p.price}</b>
+      <section className="panel appointment-panel">
+        <span className="eyebrow">FOOD & HYDRATION</span>
+        <h2>Everyday food ideas</h2>
 
-                <button
-                  className="btn-light"
-                  onClick={() => addCart(i)}
-                >
-                  {cart.includes(i) ? "Saved ✓" : "Save item"}
-                </button>
+        <p className="body-copy">
+          These are general food ideas, not treatments or
+          compulsory foods. Choose meals based on your
+          preferences, allergies and dietary needs.
+        </p>
+
+        <div className="shop-grid">
+          {foodIdeas.map(item => (
+            <article
+              className="product-card"
+              key={item.name}
+            >
+              <div className="product-visual">
+                <span>{item.icon}</span>
+                <i>Food idea</i>
               </div>
-            </div>
 
-          </article>
-        ))}
+              <div className="product-copy">
+                <h3>{item.name}</h3>
+                <p>{item.desc}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-      </div>
+      <section className="panel appointment-panel">
+        <span className="eyebrow">OFFICIAL HEALTH RESOURCE</span>
+        <h2>Affordable period-care information</h2>
+
+        <p className="body-copy">
+          Learn about the Government of India's
+          Jan Aushadhi Suvidha sanitary-napkin programme
+          and the National Health Mission's menstrual
+          hygiene resources.
+        </p>
+
+        <div className="button-row">
+          <a
+            className="btn-light link-btn"
+            href="https://janaushadhi.gov.in/about-pmbjb"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Jan Aushadhi information
+            <ArrowUpRight size={15}/>
+          </a>
+
+          <a
+            className="btn-light link-btn"
+            href="https://nhm.gov.in/nhm_live/index1.php?lang=1&level=3&lid=391&sublinkid=1021"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Government hygiene scheme
+            <ArrowUpRight size={15}/>
+          </a>
+        </div>
+      </section>
 
       <div className="panel saved-list">
+        <span className="eyebrow">YOUR CARE LIST</span>
 
-        <div>
-          <span className="eyebrow">YOUR CARE LIST</span>
-          <h2>
-            Saved essentials
-            <span className="count-pill">{cart.length}</span>
-          </h2>
-        </div>
+        <h2>
+          Saved essentials
+          <span className="count-pill">{cart.length}</span>
+        </h2>
 
         {cart.length ? (
           cart.map(i => (
             <span className="saved-chip" key={i}>
-              {products[i].icon} {products[i].name}
+              {products[i]?.icon} {products[i]?.name}
             </span>
           ))
         ) : (
           <p className="helper">
-            Save products you're interested in and they'll appear here.
+            Save products you are interested in
+            and they will appear here.
           </p>
         )}
-
       </div>
     </>
   );
 }
 
+
 // ====================================
 // HEALTHCARE RESOURCES
 // ====================================
-
 function Doctors() {
   return (
     <>
       <PageHeading
-        eyebrow="PROFESSIONAL SUPPORT"
-        title="You deserve good care."
-        desc="Find qualified support for menstrual and reproductive health questions."
+        eyebrow="OFFICIAL HEALTHCARE RESOURCES"
+        title="Find healthcare support."
+        desc="Explore official health-facility directories, government hospitals and menstrual-health programmes."
       />
 
       <div className="notice-card">
         <AlertCircle size={20}/>
 
         <div>
-          <b>Important</b>
+          <b>Important information</b>
+
           <p>
-            CycleCare does not provide medical consultations.
-            The links below are starting points only, not endorsements
-            or verified appointment availability. Check clinician
-            credentials and clinic details independently.
+            CycleCare does not provide medical consultations
+            or appointment booking. Verify the facility,
+            services, contact details and opening hours
+            directly before visiting.
           </p>
         </div>
       </div>
@@ -1879,44 +2058,107 @@ function Doctors() {
       <div className="doctor-grid">
 
         <article className="panel doctor-card">
-          <div className="doctor-icon">🩺</div>
-          <span className="eyebrow">SPECIALIST CARE</span>
-          <h2>Gynecologist</h2>
+          <div className="doctor-icon">🇮🇳</div>
+
+          <span className="eyebrow">
+            INDIA-WIDE RESOURCE
+          </span>
+
+          <h2>Health Facility Registry</h2>
 
           <p>
-            A doctor specialising in reproductive and menstrual health.
-            Consider an appointment for persistent cycle changes,
-            severe pain or unusual bleeding.
+            The official registry provides information
+            about health facilities across India.
+            Its listings include both public and private
+            facilities, so confirm ownership before visiting.
           </p>
 
           <a
             className="btn-light link-btn"
-            href="https://www.practo.com/"
+            href="https://facility.abdm.gov.in/searchV2"
             target="_blank"
             rel="noreferrer"
           >
-            Explore clinician listings <ArrowUpRight size={15}/>
+            Open facility registry
+            <ArrowUpRight size={15}/>
           </a>
         </article>
 
         <article className="panel doctor-card">
           <div className="doctor-icon">🏥</div>
-          <span className="eyebrow">PUBLIC HEALTH</span>
-          <h2>Government health services</h2>
+
+          <span className="eyebrow">
+            DELHI GOVERNMENT RESOURCE
+          </span>
+
+          <h2>Delhi Government Hospitals</h2>
 
           <p>
-            Public hospitals and health centres may provide
-            reproductive health information and services.
-            Confirm local access and opening hours.
+            Official list of Delhi government hospitals
+            with published addresses and contact details.
+            This directory is specifically for Delhi.
           </p>
 
           <a
             className="btn-light link-btn"
-            href="https://mohfw.gov.in/"
+            href="https://health.delhi.gov.in/health/delhi-government-hospitals"
             target="_blank"
             rel="noreferrer"
           >
-            Ministry of Health, India <ArrowUpRight size={15}/>
+            View government hospitals
+            <ArrowUpRight size={15}/>
+          </a>
+        </article>
+
+        <article className="panel doctor-card">
+          <div className="doctor-icon">🌸</div>
+
+          <span className="eyebrow">
+            NATIONAL HEALTH MISSION
+          </span>
+
+          <h2>Menstrual Hygiene Scheme</h2>
+
+          <p>
+            Official information about menstrual-hygiene
+            awareness, sanitary-product access and
+            programme resources for adolescent girls.
+          </p>
+
+          <a
+            className="btn-light link-btn"
+            href="https://nhm.gov.in/nhm_live/index1.php?lang=1&level=3&lid=391&sublinkid=1021"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Read scheme information
+            <ArrowUpRight size={15}/>
+          </a>
+        </article>
+
+        <article className="panel doctor-card">
+          <div className="doctor-icon">💗</div>
+
+          <span className="eyebrow">
+            AFFORDABLE PERIOD CARE
+          </span>
+
+          <h2>Jan Aushadhi Suvidha</h2>
+
+          <p>
+            Official information about the Suvidha
+            sanitary-napkin initiative under the
+            Pradhan Mantri Bhartiya Janaushadhi Pariyojana.
+          </p>
+
+          <a
+            className="btn-light link-btn"
+            href="https://janaushadhi.gov.in/about-pmbjb"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View official information
+            <ArrowUpRight size={15}/>
           </a>
         </article>
 
@@ -1924,18 +2166,22 @@ function Doctors() {
 
       <section className="panel appointment-panel">
         <span className="eyebrow">BEFORE YOUR VISIT</span>
-        <h2>Make the most of your appointment</h2>
+
+        <h2>Preparing for healthcare support</h2>
 
         <ul className="check-list">
-          <li>Write down the dates of recent periods.</li>
-          <li>Note symptoms, when they happen and how they affect daily life.</li>
-          <li>Bring questions and a list of medicines or supplements.</li>
-          <li>Ask about privacy, fees and follow-up arrangements.</li>
+          <li>Confirm that the facility provides the service you need.</li>
+          <li>Check its current address, contact details and opening hours.</li>
+          <li>Ask whether an appointment or referral is required.</li>
+          <li>Ask about consultation fees and privacy arrangements.</li>
+          <li>Speak with a qualified healthcare professional for personal medical advice.</li>
         </ul>
+
       </section>
     </>
   );
 }
+
 
 // ====================================
 // EDUCATIONAL RESOURCES
