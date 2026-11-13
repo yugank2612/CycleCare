@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import { supabase, isSupabaseConfigured } from "./lib/supabase";
+import HealthcareFinder from "./components/HealthcareFinder";
 
 import {
   addDays,
@@ -2104,157 +2105,162 @@ function Shop({ cart, addCart }) {
 // ====================================
 // HEALTHCARE RESOURCES
 // ====================================
+
 function Doctors() {
   return (
     <>
       <PageHeading
-        eyebrow="OFFICIAL HEALTHCARE RESOURCES"
+        eyebrow="CHENNAI HEALTHCARE PILOT"
         title="Find healthcare support."
-        desc="Explore official health-facility directories, government hospitals and menstrual-health programmes."
+        desc="Explore the initial Chennai facility directory, search by locality or PIN code, and access official healthcare resources."
       />
 
-      <div className="notice-card">
-        <AlertCircle size={20}/>
+      <HealthcareFinder />
 
-        <div>
-          <b>Important information</b>
-
-          <p>
-            CycleCare does not provide medical consultations
-            or appointment booking. Verify the facility,
-            services, contact details and opening hours
-            directly before visiting.
-          </p>
+      <section className="appointment-panel">
+        <div className="eyebrow">
+          OFFICIAL HEALTHCARE RESOURCES
         </div>
-      </div>
 
-      <div className="doctor-grid">
+        <h2>Additional health services and information</h2>
 
-        <article className="panel doctor-card">
-          <div className="doctor-icon">🇮🇳</div>
+        <div className="doctor-grid">
 
-          <span className="eyebrow">
-            INDIA-WIDE RESOURCE
-          </span>
+          <article className="panel doctor-card">
+            <div className="doctor-icon">🇮🇳</div>
 
-          <h2>Health Facility Registry</h2>
+            <span className="eyebrow">
+              INDIA-WIDE RESOURCE
+            </span>
 
-          <p>
-            The official registry provides information
-            about health facilities across India.
-            Its listings include both public and private
-            facilities, so confirm ownership before visiting.
-          </p>
+            <h2>Health Facility Registry</h2>
 
-          <a
-            className="btn-light link-btn"
-            href="https://facility.abdm.gov.in/searchV2"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open facility registry
-            <ArrowUpRight size={15}/>
-          </a>
-        </article>
+            <p>
+              Explore the official Ayushman Bharat Digital
+              Mission Health Facility Registry. Confirm the
+              facility information directly before visiting.
+            </p>
 
-        <article className="panel doctor-card">
-          <div className="doctor-icon">🏥</div>
+            <a
+              className="btn-light link-btn"
+              href="https://facility.abdm.gov.in/searchV2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open facility registry
+              <ArrowUpRight size={15}/>
+            </a>
+          </article>
 
-          <span className="eyebrow">
-            DELHI GOVERNMENT RESOURCE
-          </span>
+          <article className="panel doctor-card">
+            <div className="doctor-icon">🏥</div>
 
-          <h2>Delhi Government Hospitals</h2>
+            <span className="eyebrow">
+              TAMIL NADU RESOURCE
+            </span>
 
-          <p>
-            Official list of Delhi government hospitals
-            with published addresses and contact details.
-            This directory is specifically for Delhi.
-          </p>
+            <h2>Directorate of Medical Education</h2>
 
-          <a
-            className="btn-light link-btn"
-            href="https://health.delhi.gov.in/health/delhi-government-hospitals"
-            target="_blank"
-            rel="noreferrer"
-          >
-            View government hospitals
-            <ArrowUpRight size={15}/>
-          </a>
-        </article>
+            <p>
+              Access the Tamil Nadu Directorate of Medical
+              Education's official information and resources.
+            </p>
 
-        <article className="panel doctor-card">
-          <div className="doctor-icon">🌸</div>
+            <a
+              className="btn-light link-btn"
+              href="https://www.tnhealth.org/tngovin/dme/dme.php"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Visit official website
+              <ArrowUpRight size={15}/>
+            </a>
+          </article>
 
-          <span className="eyebrow">
-            NATIONAL HEALTH MISSION
-          </span>
+          <article className="panel doctor-card">
+            <div className="doctor-icon">🌸</div>
 
-          <h2>Menstrual Hygiene Scheme</h2>
+            <span className="eyebrow">
+              NATIONAL HEALTH MISSION
+            </span>
 
-          <p>
-            Official information about menstrual-hygiene
-            awareness, sanitary-product access and
-            programme resources for adolescent girls.
-          </p>
+            <h2>Menstrual Hygiene Scheme</h2>
 
-          <a
-            className="btn-light link-btn"
-            href="https://nhm.gov.in/nhm_live/index1.php?lang=1&level=3&lid=391&sublinkid=1021"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Read scheme information
-            <ArrowUpRight size={15}/>
-          </a>
-        </article>
+            <p>
+              Official information about menstrual-hygiene
+              awareness, product access and programme resources
+              for adolescent girls.
+            </p>
 
-        <article className="panel doctor-card">
-          <div className="doctor-icon">💗</div>
+            <a
+              className="btn-light link-btn"
+              href="https://nhm.gov.in/nhm_live/index1.php?lang=1&level=3&lid=391&sublinkid=1021"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read scheme information
+              <ArrowUpRight size={15}/>
+            </a>
+          </article>
 
-          <span className="eyebrow">
-            AFFORDABLE PERIOD CARE
-          </span>
+          <article className="panel doctor-card">
+            <div className="doctor-icon">💗</div>
 
-          <h2>Jan Aushadhi Suvidha</h2>
+            <span className="eyebrow">
+              AFFORDABLE PERIOD CARE
+            </span>
 
-          <p>
-            Official information about the Suvidha
-            sanitary-napkin initiative under the
-            Pradhan Mantri Bhartiya Janaushadhi Pariyojana.
-          </p>
+            <h2>Jan Aushadhi Suvidha</h2>
 
-          <a
-            className="btn-light link-btn"
-            href="https://janaushadhi.gov.in/about-pmbjb"
-            target="_blank"
-            rel="noreferrer"
-          >
-            View official information
-            <ArrowUpRight size={15}/>
-          </a>
-        </article>
+            <p>
+              Read official information about the Suvidha
+              sanitary-napkin initiative under the
+              Pradhan Mantri Bhartiya Janaushadhi Pariyojana.
+            </p>
 
-      </div>
+            <a
+              className="btn-light link-btn"
+              href="https://janaushadhi.gov.in/about-pmbjb"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View official information
+              <ArrowUpRight size={15}/>
+            </a>
+          </article>
+
+        </div>
+      </section>
 
       <section className="panel appointment-panel">
-        <span className="eyebrow">BEFORE YOUR VISIT</span>
+        <span className="eyebrow">
+          BEFORE YOUR VISIT
+        </span>
 
         <h2>Preparing for healthcare support</h2>
 
         <ul className="check-list">
-          <li>Confirm that the facility provides the service you need.</li>
-          <li>Check its current address, contact details and opening hours.</li>
-          <li>Ask whether an appointment or referral is required.</li>
-          <li>Ask about consultation fees and privacy arrangements.</li>
-          <li>Speak with a qualified healthcare professional for personal medical advice.</li>
+          <li>
+            Confirm that the facility provides the service you need.
+          </li>
+          <li>
+            Check its current address, contact details and timings.
+          </li>
+          <li>
+            Ask whether an appointment or referral is required.
+          </li>
+          <li>
+            Ask about consultation fees and privacy arrangements.
+          </li>
+          <li>
+            Speak with a qualified healthcare professional for personal medical advice.
+          </li>
         </ul>
 
       </section>
     </>
   );
 }
-
 
 // ====================================
 // EDUCATIONAL RESOURCES
