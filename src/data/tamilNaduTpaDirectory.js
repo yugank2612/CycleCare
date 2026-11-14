@@ -1,4 +1,4 @@
-import snapshot from "./tamilNaduTpaFacilities.json";
+import snapshot from "./tamilNaduTpaFacilities.json" with { type: "json" };
 
 export const TAMIL_NADU_TPA_METADATA = snapshot.metadata;
 export const TAMIL_NADU_TPA_RECORDS = snapshot.records;
